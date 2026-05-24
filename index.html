@@ -3,63 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aonull</title>
-
-  <?!= HtmlService.createHtmlOutputFromFile('style').getContent(); ?>
+  <title>ファイル置き場</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header class="site-header">
+    <button id="logoButton" class="logo-button" type="button" aria-label="aonull_ ファイル置き場">
+      <span class="logo-title">aonull_</span>
+      <span class="logo-subtitle">ファイル置き場</span>
+    </button>
+  </header>
 
-<!-- 入室アニメーション -->
-<div id="intro">
-  <div class="panel top"></div>
-  <div class="panel bottom"></div>
-</div>
+  <main class="page-shell">
+    <section class="game-shell">
+      <div id="playLayout" class="play-layout" data-mode="solo">
+        <aside id="opponentPanel" class="opponent-panel panel-empty">
+          <p id="opponentHeading" class="panel-label">相手フィールド</p>
+          <div id="opponentFrame" class="opponent-frame">
+            <canvas id="opponentCanvas" aria-label="相手フィールド"></canvas>
+          </div>
+          <div class="opponent-meta">
+            <p id="opponentName" class="opponent-name">-</p>
+            <p id="opponentScore" class="opponent-score">0</p>
+            <p id="battleStatus" class="battle-status">-</p>
+          </div>
+        </aside>
 
-<header>
-  <h1>AONULL</h1>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Profile</a>
-  </nav>
-</header>
+        <section id="boardSection" class="board-section">
+          <div id="boardFrame" class="board-frame">
+            <canvas id="boardCanvas" aria-label="ゲーム画面"></canvas>
 
-<section class="hero fade">
-  <h2>Railway Operation in Virtual Space</h2>
-  <p>仮想空間における鉄道活動と配信</p>
-</section>
+            <div id="startOverlay" class="overlay">
+              <div class="start-panel">
+                <button id="startButton" class="action-button" type="button">開始</button>
+                <p id="startHint" class="overlay-note"></p>
+              </div>
+            </div>
 
-<section class="section">
-  <div class="container">
-    <div class="card fade">
-      <h3>Overview</h3>
-      <p>
-        Robloxの鉄道ゲームを中心に活動しています。<br>
-        ダイヤ運転などを行いながら、配信も行っています。
-      </p>
+            <div id="gameOverOverlay" class="overlay" hidden>
+              <div class="result-panel">
+                <p class="result-line">【記録】</p>
+                <p id="finalScore" class="result-score">0点</p>
+                <p id="finalRank" class="result-line">ランク：D</p>
+                <button id="restartButton" class="action-button" type="button">もう一回プレイする</button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <p style="margin-top:10px;">
-        <a href="https://x.com/aonull012" target="_blank">X</a>
-      </p>
-    </div>
-  </div>
-</section>
+        <aside class="next-panel">
+          <p class="panel-label">次のブロック</p>
+          <div id="nextFrame" class="next-frame">
+            <canvas id="nextCanvas" aria-label="次のブロック"></canvas>
+          </div>
+        </aside>
+      </div>
 
-<section class="section">
-  <div class="container">
-    <div class="card fade">
-      <h3>Streaming</h3>
+      <section id="controlSection" class="control-section">
+        <div class="info-grid">
+          <section class="score-panel" aria-label="現在スコア">
+            <p class="panel-label">現在スコア</p>
+            <div class="score-row">
+              <p id="scoreValue" class="score-value">0</p>
+              <div class="best-score-box" aria-label="最高スコア">
+                <p class="mini-label">最高</p>
+                <p id="bestScoreValue" class="best-score-value">0</p>
+              </div>
+            </div>
+          </section>
 
-      <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=Aonull000"></iframe>
+          <section class="status-panel" aria-label="対戦情報">
+            <p class="panel-label">対戦情報</p>
+            <p id="statusValue" class="status-value">ひとり</p>
+          </section>
+        </div>
 
-    </div>
-  </div>
-</section>
+        <div class="settings-grid">
+          <section class="control-card">
+            <p class="panel-label">モード</p>
+            <form id="modeForm" class="toggle-group" aria-label="モード">
+              <label class="toggle-option">
+                <input type="radio" name="playMode" value="solo" checked>
+                <span>ひとり</span>
+              </label>
+              <label class="toggle-option">
+                <input type="radio" name="playMode" value="cpu">
+                <span>CPU対戦</span>
+              </label>
+              <label class="toggle-option">
+                <input type="radio" name="playMode" value="online">
+                <span>オンライン対戦</span>
+              </label>
+            </form>
+          </section>
 
-<footer>
-  © Aonull
-</footer>
+          <section id="cpuOptions" class="control-card" hidden>
+            <label class="field-stack" for="cpuLevelSelect">
+              <span class="panel-label">CPU強さ</span>
+              <select id="cpuLevelSelect" class="field-control">
+                <option value="lv1">Lv1</option>
+                <option value="lv2" selected>Lv2</option>
+                <option value="lv3">Lv3</option>
+              </select>
+            </label>
+          </section>
 
-<?!= HtmlService.createHtmlOutputFromFile('script').getContent(); ?>
+          <section id="onlineOptions" class="control-card" hidden>
+            <label class="field-stack" for="roomInput">
+              <span class="panel-label">部屋名</span>
+              <input id="roomInput" class="field-control" type="text" inputmode="text" maxlength="24" autocomplete="off">
+            </label>
+          </section>
+        </div>
+      </section>
+    </section>
 
+    <section class="link-box" aria-label="サイト案内">
+      <p class="link-box-title">サイト案内</p>
+      <p class="link-box-text">このサイトは自己満の為バグが多数存在します（）</p>
+      <div class="link-box-actions">
+        <a class="link-button" href="https://aonull0001.github.io/Introduce/" target="_blank" rel="noreferrer">他の制作サイト</a>
+      </div>
+      <p class="link-box-text">管理者名 Twitter : aonull012</p>
+      <p class="link-box-text">管理者詳細 https://aonull0001.github.io/Introduce/</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
