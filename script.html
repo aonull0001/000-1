@@ -1,0 +1,29 @@
+<script>
+
+// 入室アニメーション
+window.addEventListener("load", () => {
+  const intro = document.getElementById("intro");
+
+  setTimeout(() => {
+    intro.classList.add("open");
+  }, 300);
+
+  setTimeout(() => {
+    intro.style.display = "none";
+  }, 1300);
+});
+
+// フェードイン
+const fades = document.querySelectorAll('.fade');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+});
+
+fades.forEach(el => observer.observe(el));
+
+</script>

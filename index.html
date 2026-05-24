@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aonull</title>
+
+  <?!= HtmlService.createHtmlOutputFromFile('style').getContent(); ?>
+</head>
+<body>
+
+<!-- 入室アニメーション -->
+<div id="intro">
+  <div class="panel top"></div>
+  <div class="panel bottom"></div>
+</div>
+
+<header>
+  <h1>AONULL</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Profile</a>
+  </nav>
+</header>
+
+<section class="hero fade">
+  <h2>Railway Operation in Virtual Space</h2>
+  <p>仮想空間における鉄道活動と配信</p>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card fade">
+      <h3>Overview</h3>
+      <p>
+        Robloxの鉄道ゲームを中心に活動しています。<br>
+        ダイヤ運転などを行いながら、配信も行っています。
+      </p>
+
+      <p style="margin-top:10px;">
+        <a href="https://x.com/aonull012" target="_blank">X</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card fade">
+      <h3>Streaming</h3>
+
+      <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=Aonull000"></iframe>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  © Aonull
+</footer>
+
+<?!= HtmlService.createHtmlOutputFromFile('script').getContent(); ?>
+
+</body>
+</html>
